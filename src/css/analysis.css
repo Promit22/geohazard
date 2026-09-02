@@ -1,0 +1,194 @@
+:root {
+  --config-color: #9dc9e7;
+}
+
+main {
+  max-width: 900px;
+  margin-top: 2rem;
+
+  & > #title {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+
+    & > h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #222;
+    }
+
+    & > p {
+      font-size: 1rem;
+      color: #444;
+      font-weight: 500;
+      line-height: 1.5;
+    }
+  }
+
+  & > #config {
+    background-color: var(--config-color);
+    padding: 1.5rem;
+    width: 100%;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+
+    & > form {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+
+      & > button {
+        width: fit-content;
+        padding: 1em 2rem;
+        font-size: 1rem;
+        margin: 0 auto;
+        border-radius: 8px;
+        border: none;
+        background-color: var(--primary-cta);
+        color: white;
+      }
+      & > #static,
+      & > #dynamic {
+        display: grid;
+        grid-template-columns: 1fr; /* Mobile-first base layout */
+        gap: 20px;
+
+        & > h2 {
+          grid-column: span 1;
+          margin: 0 0 5px 0;
+          font-size: 1.3rem;
+          color: #222;
+        }
+
+        & > .input-group {
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+
+          & > label {
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: #333;
+          }
+
+          & > input,
+          & > select {
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid transparent;
+            background-color: var(--input-bg);
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+
+            &:focus {
+              outline: none;
+              border-color: #2e7d32;
+              background-color: #fff;
+            }
+          }
+
+          & > .select-wrapper {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+
+            & > input {
+              flex: 1;
+              padding: 10px;
+              border-radius: 6px;
+              border: 1px solid transparent;
+              background-color: var(--input-bg);
+              font-family: inherit;
+              font-size: 0.95rem;
+
+              &:focus {
+                outline: none;
+                border-color: #2e7d32;
+                background-color: #fff;
+              }
+            }
+
+            & > select {
+              flex: 1;
+              width: 100%;
+              cursor: pointer;
+              padding: 10px;
+              border-radius: 6px;
+              border: 1px solid transparent;
+              background-color: var(--input-bg);
+              font-family: inherit;
+              font-size: 0.95rem;
+
+              &:focus {
+                outline: none;
+                border-color: #2e7d32;
+                background-color: #fff;
+              }
+
+              & > option {
+                font-weight: 600;
+                letter-spacing: 1px;
+              }
+            }
+          }
+        }
+      }
+    }
+    /* Highlight invalid input borders */
+    & > .input-group.invalid input,
+    & > .input-group.invalid select {
+      border-color: #ef4444;
+      outline-color: #ef4444;
+      & > .error-msg {
+        display: none;
+        color: #ef4444;
+        font-size: 0.8rem;
+        margin-top: 4px;
+      }
+      & > .input-group.invalid .error-msg {
+        display: block;
+      }
+    }
+
+    /* Error text styling */
+  }
+
+  & > #map-container {
+    & > #map {
+      width: 100%;
+      border-radius: 1rem;
+      min-height: 300px;
+      height: 350px;
+      background-color: #ccc;
+      /* cursor: grab; */
+    }
+  }
+}
+
+/* Progressive enhancement for larger screens */
+@media (min-width: 768px) {
+  main {
+    /* margin-top: 0; */
+    & > #config {
+      & > form {
+        & > #static,
+        & > #dynamic {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+
+          & > h2 {
+            grid-column: span 2;
+          }
+        }
+      }
+    }
+    & > #map-container {
+      & > #map {
+        /* max-width: 600px; */
+        height: 500px;
+      }
+    }
+  }
+}

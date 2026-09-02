@@ -1,0 +1,156 @@
+
+main {
+  & > #hero {
+    background-color: var(--hero-background);
+    border-radius: 1rem;
+    box-shadow: 0 4px 1rem rgba(0, 0, 0, 0.08);
+    width: 100%;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+
+    & > #text {
+      width: 100%;
+      max-width: 100%;
+
+      & > h1 {
+        margin: 0 0 0.5rem 0;
+        font-size: 1.8rem;
+      }
+
+      & > h2 {
+        font-weight: 500;
+        font-size: 1rem;
+        margin: 0 0 1rem 0;
+      }
+
+      & > p {
+        line-height: 1.5;
+        color: #333;
+        margin: 0;
+      }
+
+      & > #primary-cta {
+        margin-top: 1.5rem;
+
+        & > a {
+          display: inline-block;
+          background-color: var(--primary-cta);
+          text-decoration: none;
+          color: white;
+          padding: 0.8rem 1.2rem;
+          border-radius: 0.5rem;
+          transition: all 0.25s ease-in-out;
+
+          &:focus,
+          &:hover {
+            outline: 2px solid green;
+            outline-offset: 2px;
+          }
+        }
+      }
+    }
+
+    & > #demo-map {
+      width: 100%;
+      border-radius: 1rem;
+      min-height: 300px;
+      height: 350px;
+      background-color: #ccc;
+    }
+  }
+
+  & > .extra-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+    padding: 1.5rem;
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+
+    & > .extra-text {
+      width: 100%;
+
+      & > h2 {
+        margin: 0 0 0.5rem 0;
+        font-weight: 600;
+        font-size: 1.3rem;
+      }
+
+      & > p {
+        margin: 0;
+        line-height: 1.5;
+        color: #444;
+      }
+    }
+
+    & > .image {
+      width: 100%;
+      height: 220px;
+      background-color: #ccc;
+      border-radius: 0.5rem;
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  main {
+    & > #hero {
+      flex-direction: row;
+      justify-content: space-between;
+      padding: 3rem;
+      gap: 2rem;
+
+      & > #text {
+        max-width: 350px;
+        display: flex;
+        flex-direction: column;
+
+        & > h1 {
+          font-size: 2.3rem;
+        }
+
+        & > h2 {
+          font-size: 1.2rem;
+        }
+      }
+
+      & > #demo-map {
+        max-width: 600px;
+        height: 450px;
+      }
+    }
+
+    & > .extra-info {
+      flex-direction: row-reverse;
+      justify-content: space-between;
+      align-items: center;
+      padding: 3rem;
+      background-color: transparent;
+      box-shadow: none;
+
+      &.two,
+      &:nth-child(3) {
+        flex-direction: row;
+      }
+
+      & > .extra-text {
+        max-width: 350px;
+
+        & > h2 {
+          font-size: 1.5rem;
+        }
+      }
+
+      & > .image {
+        width: 100%;
+        max-width: 500px;
+        height: 300px;
+      }
+    }
+  }
+}

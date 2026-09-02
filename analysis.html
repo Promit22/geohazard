@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hazard Analysis - GeoHazard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/maplibre-gl@6.4.0/dist/maplibre-gl.css"
+    />
+
+    <link rel="stylesheet" href="/src/css/global.css" />
+    <link rel="stylesheet" href="/src/css/analysis.css" />
+  </head>
+  <body>
+    <header>
+      <a id="logo" href="./index.html">GeoHazard</a>
+      <nav id="links">
+        <a href="/analysis.html">Analysis</a>
+        <a href="/about/about.html">About</a>
+      </nav>
+    </header>
+
+    <main>
+      <section id="title">
+        <h1>Hazard Analysis</h1>
+        <p>
+          Choose a hazard, location, and time period to discover where events
+          occurred and what may have been exposed.
+        </p>
+      </section>
+
+      <section id="config">
+        <!-- <form id="config-form" action="">
+          
+          <div id="static">
+            <h2>Configure</h2>
+            <div class="input-group">
+              <label for="hazard-type">Hazard type</label>
+              <div class="select-wrapper">
+                <select id="hazard-type" name="hazard">
+                  <option value="earthquake" selected>Earthquake</option>
+                  <option value="flood">Flood</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="country">Country</label>
+              <input type="text" id="country" name="country" placeholder="e.g. Japan" />
+            </div>
+
+            <div class="input-group">
+              <label for="start-time">Start time</label>
+              <input type="date" id="start-time" name="start-time" />
+            </div>
+
+            <div class="input-group">
+              <label for="end-time">End time</label>
+              <input type="date" id="end-time" name="end-time" />
+            </div>
+          </div>
+
+          <div id="dynamic">
+          
+          </div>
+          <button type="submit">Analyze</button>
+        </form> -->
+        <form id="config-form" action="" novalidate>
+          <div id="static">
+            <h2>Configure</h2>
+
+            <div class="input-group">
+              <label for="hazard-type">Hazard type</label>
+              <div class="select-wrapper">
+                <select id="hazard-type" name="hazard">
+                  <option value="earthquake" selected>Earthquake</option>
+                  <option value="flood">Flood</option>
+                </select>
+              </div>
+              <span class="error-msg"></span>
+            </div>
+
+            <div class="input-group">
+              <label for="country">Country</label>
+              <input
+                type="text"
+                id="country"
+                name="country"
+                placeholder="e.g. Japan"
+              />
+              <span class="error-msg"></span>
+            </div>
+
+            <div class="input-group">
+              <label for="start-time">Start time</label>
+              <input type="date" id="start-time" name="start-time" />
+              <span class="error-msg"></span>
+            </div>
+
+            <div class="input-group">
+              <label for="end-time">End time</label>
+              <input type="date" id="end-time" name="end-time" />
+              <span class="error-msg"></span>
+            </div>
+          </div>
+
+          <div id="dynamic"></div>
+          <button type="submit">Analyze</button>
+        </form>
+      </section>
+      <section id="map-container">
+        <div id="map"></div>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2026 GeoHazard. All rights reserved.</p>
+    </footer>
+    <script src="/src/analysis.js" type="module"></script>
+  </body>
+</html>
+
+<!-- <div class="input-group">
+              <label for="radius">Radius</label>
+              <div class="select-wrapper">
+                <input type="text" id="radius" placeholder="5" />
+                <select id="radius-unit">
+                  <option value="km" selected>KM</option>
+                  <option value="deg">DEG</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="magnitude">Magnitude</label>
+              <input type="text" id="magnitude" placeholder="5" />
+            </div> -->
