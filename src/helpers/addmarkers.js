@@ -1,5 +1,5 @@
 import { Marker } from "maplibre-gl";
-import { getOverturePlaces } from "./places";
+import { generatePlacesCategory, getOverturePlaces } from "./places";
 // export function addMarkers(map, earthquake) {
 //   console.log('earthqueake from addMarkers', earthquake);
 //   earthquake.features.forEach((marker) => {
@@ -124,13 +124,14 @@ export async function addEarthquakeLayer(map, earthquake) {
       console.log("Coordinates:", lat, lng);
 
       try {
-        const places = await getOverturePlaces(
-          lat,
-          lng,
-          10000, // 10 km
-          OVERTURE_API_KEY,
-        );
+        const places = await getOverturePlaces();
+        // lat,
+        // lng,
+        // 10000, // 10 km
+        // "ovt_OvhhpmB2VF6uDu9CCGsGoXGu5xspMbXwfj38NqgzKvnz0C1h28RKxUj4myRlxb5J",
         console.log(places.features.length);
+        const placesCategory = generatePlacesCategory(places);
+        console.log("places category", placesCategory);
 
         console.log("Overture response:", places);
         console.log("Number returned:", places.features.length);

@@ -1,5 +1,6 @@
 :root {
   --config-color: #9dc9e7;
+  --analysis-color: #cbdbe7;
 }
 
 main {
@@ -40,7 +41,7 @@ main {
 
       & > button {
         width: fit-content;
-        padding: 1em 2rem;
+        padding: 1rem 2rem;
         font-size: 1rem;
         margin: 0 auto;
         border-radius: 8px;
@@ -165,6 +166,11 @@ main {
       background-color: #ccc;
       /* cursor: grab; */
     }
+  }
+  & > #analysis {
+    width: 100%;
+    background-color: var(--analysis-color);
+    padding: 2rem;
   }
 }
 
