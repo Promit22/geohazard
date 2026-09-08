@@ -1,5 +1,9 @@
 import { Marker } from "maplibre-gl";
-import { generatePlacesCategory, getOverturePlaces } from "./places";
+import {
+  generatePlacesCategory,
+  getOverturePlaces,
+  distanceKm,
+} from "./places";
 // export function addMarkers(map, earthquake) {
 //   console.log('earthqueake from addMarkers', earthquake);
 //   earthquake.features.forEach((marker) => {
@@ -71,13 +75,20 @@ import { generatePlacesCategory, getOverturePlaces } from "./places";
 export async function addEarthquakeLayer(map, earthquake) {
   // 1. Wait until the map style is fully loaded
   if (!map.isStyleLoaded()) {
-    await new Promise((resolve) => map.once("style.load", resolve));
+    await new Promise((resolve) => {
+      map.once("style.load", resolve);
+      console.log("marker success");
+    });
+  } else {
+    console.log("marker failed");
   }
 
   console.log("earthquake from addEarthquakeLayer", earthquake);
 
   // 2. Add or update source
   if (!map.getSource("earthquakes")) {
+    console.log("source available");
+
     map.addSource("earthquakes", {
       type: "geojson",
       data: earthquake,
@@ -157,5 +168,7 @@ export async function addEarthquakeLayer(map, earthquake) {
     map.on("mouseleave", "earthquake-points", () => {
       map.getCanvas().style.cursor = "";
     });
+  } else {
+    console.log("did not work");
   }
 }

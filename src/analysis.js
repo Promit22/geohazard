@@ -12,6 +12,14 @@ import { addEarthquakeLayer } from "./helpers/addmarkers.js";
 
 setWorkerUrl(workerUrl);
 
+const map = new Map({
+  container: "map", // container id
+  style: "https://tiles.openfreemap.org/styles/bright", // style URL
+  center: [90.3563, 23.685], // starting position [lng, lat]
+  zoom: 6, // starting zoom
+  maplibreLogo: true,
+});
+
 const hazardType = document.getElementById("hazard-type");
 
 function renderHazardOptions() {
@@ -150,7 +158,7 @@ form.addEventListener("submit", (e) => {
     firstInvalidInput.focus();
     return;
   }
-  const countryBbox = countryCodesAndBboxes.find((c) => {
+  const currentCountry = countryCodesAndBboxes.find((c) => {
     return (
       country.value.trim().toString().toLowerCase() === c.name.toLowerCase()
     );
@@ -159,10 +167,15 @@ form.addEventListener("submit", (e) => {
   setEarthquakeOnMap(
     startTime.value,
     endTime.value,
-    countryBbox.bbox,
+    currentCountry.bbox,
     magnitude,
     limit,
   );
+
+  map.fitBounds(currentCountry.bbox, {
+    duration: 4000,
+    padding: 50,
+  });
 
   // earthquake = ;
   // console.log(earthquake);
@@ -175,14 +188,6 @@ form.addEventListener("submit", (e) => {
   // console.log(paramsObj);
 
   // const url = buildUSGSUrl(paramsObj);
-});
-
-const map = new Map({
-  container: "map", // container id
-  style: "https://tiles.openfreemap.org/styles/bright", // style URL
-  center: [90.3563, 23.685], // starting position [lng, lat]
-  zoom: 6, // starting zoom
-  maplibreLogo: true,
 });
 
 async function setEarthquakeOnMap(starttime, endtime, bbox, magnitude, limit) {
