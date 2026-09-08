@@ -131,6 +131,17 @@ export async function addEarthquakeLayer(map, earthquake) {
         // "ovt_OvhhpmB2VF6uDu9CCGsGoXGu5xspMbXwfj38NqgzKvnz0C1h28RKxUj4myRlxb5J",
         console.log(places.features.length);
         const placesCategory = generatePlacesCategory(places);
+        const nearestPlaces = places.features
+          .map((place) => {
+            const [placeLng, placeLat] = place.geometry.coordinates;
+
+            return {
+              feature: place,
+              distance: distanceKm(lat, lng, placeLat, placeLng),
+            };
+          })
+          .sort((a, b) => a.distance - b.distance)
+          .slice(0, 10);
         console.log("places category", placesCategory);
 
         console.log("Overture response:", places);
