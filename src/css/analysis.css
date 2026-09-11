@@ -243,6 +243,67 @@ main {
     color: #1f2937;
     text-align: right;
   }
+
+  /* 1. Visually hide the input checkbox */
+  .toggle-checkbox {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* 2. Grid animation setup */
+  .accordion-wrapper {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .accordion-inner {
+    overflow: hidden;
+  }
+
+  /* 3. Smooth expansion when checkbox is checked */
+  .toggle-checkbox:checked + .accordion-wrapper {
+    grid-template-rows: 1fr;
+  }
+
+  /* 4. Button & Icon animation styling */
+  .accordion-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    color: #2563eb;
+    font-weight: 500;
+    font-size: 0.875rem;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .chevron {
+    display: inline-block;
+    font-size: 1.1rem;
+    transition: transform 0.35s ease;
+    transform: rotate(90deg);
+  }
+
+  .toggle-checkbox:checked ~ .accordion-btn .chevron {
+    transform: rotate(-90deg);
+  }
+
+  .txt-less {
+    display: none;
+  }
+  .toggle-checkbox:checked ~ .accordion-btn .txt-more {
+    display: none;
+  }
+  .toggle-checkbox:checked ~ .accordion-btn .txt-less {
+    display: inline;
+  }
+
+  .extra-padding {
+    padding-top: 1rem;
+  }
 }
 
 /* Progressive enhancement for larger screens */

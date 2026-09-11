@@ -24,3 +24,11 @@ export async function getEarthquakes(
   console.log(json);
   return json;
 }
+
+export function findEarthquake(currentId, earthquakes) {
+  return earthquakes.features.find((feature) => {
+    const ids = feature.properties.ids.split(",").filter(Boolean);
+
+    return currentId.some((id) => ids.includes(id));
+  });
+}

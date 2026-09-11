@@ -3,12 +3,19 @@ import workerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url";
 import {
   renderEarthquakeInputs,
   renderFloodInputs,
+  renderCardDetails,
+  generateEarthquakeKv,
+  renderCollapsibleCard,
 } from "./helpers/analysisHelper.js";
 import { countryCodesAndBboxes } from "./helpers/isoCode.js";
 import { showError, clearError } from "./helpers/errorHandler.js";
 import { buildParamsObject, buildUSGSUrl } from "./helpers/urlBuilder.js";
 import { getEarthquakes } from "./helpers/hazard.js";
 import { addEarthquakeLayer } from "./helpers/addmarkers.js";
+import { findEarthquake } from "./helpers/hazard.js";
+import { getOverturePlaces } from "./helpers/places.js";
+import { generatePlacesCategory } from "./helpers/places.js";
+import { distanceKm } from "./helpers/places.js";
 
 setWorkerUrl(workerUrl);
 
@@ -197,3 +204,83 @@ async function setEarthquakeOnMap(starttime, endtime, bbox, magnitude, limit) {
   await addEarthquakeLayer(map, earthquake);
 }
 // addEarthquakeLayer(map, earthquake);
+
+map.on("click", "earthquake-points", async (e) => {
+  const featureId = e.features[0]["properties"]["ids"]
+    .split(",")
+    .filter(Boolean);
+
+  console.log(featureId);
+  const usgsEar = findEarthquake(featureId, earthquake);
+
+  const currentEarthquake = usgsEar ? usgsEar : e.features[0];
+  // console.log("current earthquake", feature);
+
+  // console.log("current earthquake", feature);
+  // console.log("feature id:", feature.id);
+  // console.log("properties:", feature.properties);
+  // console.log("geometry:", feature.geometry);
+  // window.alert(`Earthquake magnitude: ${feature.properties.mag}`);
+
+  // const features = map.queryRenderedFeatures(e.point, {
+  //   layers: ["earthquake-points"],
+  // });
+
+  // if (!features.length) return;
+
+  // const feature = features[0];
+
+  console.log("Current earthquake:", currentEarthquake);
+  const [lng, lat, dep] = currentEarthquake.geometry.coordinates;
+  console.log(e.features[0]);
+
+  console.log("Coordinates:", lat, lng, dep);
+  const earthquakeKv = generateEarthquakeKv(currentEarthquake, dep);
+  renderCardDetails("details", "Earthquake Details", earthquakeKv);
+
+  try {
+    const places = await getOverturePlaces();
+    // lat,
+    // lng,
+    // 10000, // 10 km
+    // "ovt_OvhhpmB2VF6uDu9CCGsGoXGu5xspMbXwfj38NqgzKvnz0C1h28RKxUj4myRlxb5J",
+    const totalPlaces = places.features.length;
+    const placesCategory = generatePlacesCategory(places);
+    // renderCardDetails("category", "Potentially exposed", [
+    //   {
+    //     key: "Places",
+    //     value: `${totalPlaces}${totalPlaces === 25000 ? "+" : ""}`,
+    //   },
+    // ]);
+
+    // renderCardDetails("more", null, placesCategory, true, "category");
+    renderCollapsibleCard(
+      "category",
+      "Potentially Exposed",
+      [
+        {
+          key: "Places",
+          value: `${totalPlaces}${totalPlaces === 25000 ? "+" : ""}`,
+        },
+      ],
+      placesCategory,
+    );
+    const nearestPlaces = places.features
+      .map((place) => {
+        const [placeLng, placeLat] = place.geometry.coordinates;
+
+        return {
+          feature: place,
+          distance: distanceKm(lat, lng, placeLat, placeLng),
+        };
+      })
+      .sort((a, b) => a.distance - b.distance)
+      .slice(0, 10);
+    console.log("places category", placesCategory);
+
+    console.log("Overture response:", places);
+    console.log("Number returned:", places.features.length);
+  } catch (error) {
+    console.error("Failed to get Overture places:", error);
+  }
+});

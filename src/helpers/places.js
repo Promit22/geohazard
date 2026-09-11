@@ -44,8 +44,26 @@ export function distanceKm(lat1, lon1, lat2, lon2) {
   return 2 * R * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 }
 
+// export function generatePlacesCategory(places) {
+//   const placesByCategory = {};
+//   for (const place of places.features) {
+//     const category = place.properties.basic_category;
+
+//     if (!category) continue;
+
+//     if (!placesByCategory[category]) {
+//       placesByCategory[category] = [];
+//     }
+
+//     placesByCategory[category].push(place);
+//   }
+
+//   return placesByCategory;
+// }
+
 export function generatePlacesCategory(places) {
   const placesByCategory = {};
+
   for (const place of places.features) {
     const category = place.properties.basic_category;
 
@@ -58,5 +76,8 @@ export function generatePlacesCategory(places) {
     placesByCategory[category].push(place);
   }
 
-  return placesByCategory;
+  return Object.entries(placesByCategory).map(([key, value]) => ({
+    key,
+    value,
+  }));
 }
