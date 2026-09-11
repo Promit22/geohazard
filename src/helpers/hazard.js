@@ -7,7 +7,6 @@ export async function getEarthquakes(
   magnitude,
   limit,
 ) {
-  // const baseUrl = 'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson'
   const paramsObject = buildParamsObject(
     startTime,
     endTime,
@@ -18,9 +17,7 @@ export async function getEarthquakes(
   const url = buildUSGSUrl(paramsObject);
   const raw = await fetch(url);
   const json = await raw.json();
-  // const modified = json.map((e) => {
 
-  // })
   console.log(json);
   return json;
 }
