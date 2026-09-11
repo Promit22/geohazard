@@ -1,0 +1,115 @@
+/* Base Container Setup */
+.about-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem;
+  box-sizing: border-box;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+  color: #222;
+  line-height: 1.6;
+}
+
+/* Common Section Spacing */
+.about-container section {
+  margin-bottom: 3.5rem;
+}
+
+/* Typography */
+.about-container h1 {
+  font-size: 2.25rem;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.2;
+}
+
+.about-container h2 {
+  font-size: 1.75rem;
+  margin: 0 0 1rem 0;
+  line-height: 1.3;
+}
+
+.about-container p {
+  margin: 0 0 1rem 0;
+  color: #444;
+}
+
+.tagline {
+  font-size: 1.125rem;
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+/* Values Grid (Mobile: 1 column) */
+.values-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+.value-card {
+  background-color: #f9f9f9;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #eee;
+}
+
+.value-card h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
+}
+
+.value-card p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+/* CTA Box */
+.about-cta {
+  text-align: center;
+  background-color: #f0f4f8;
+  padding: 2.5rem 1.5rem;
+  border-radius: 12px;
+}
+
+.cta-button {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #0066cc;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.cta-button:hover {
+  background-color: #004fb3;
+}
+
+/* Tablet & Desktop Adjustments */
+@media (min-width: 600px) {
+  .values-grid {
+    grid-template-columns: repeat(3, 1fr); /* Switch to 3 columns */
+  }
+}
+
+@media (min-width: 768px) {
+  .about-container {
+    padding: 3.5rem 2rem;
+  }
+
+  .about-container h1 {
+    font-size: 3rem;
+  }
+
+  .about-container h2 {
+    font-size: 2rem;
+  }
+}

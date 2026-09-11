@@ -1,78 +1,3 @@
-import { Marker } from "maplibre-gl";
-import {
-  generatePlacesCategory,
-  getOverturePlaces,
-  distanceKm,
-} from "./places";
-import { findEarthquake } from "./hazard";
-// export function addMarkers(map, earthquake) {
-//   console.log('earthqueake from addMarkers', earthquake);
-//   earthquake.features.forEach((marker) => {
-//     // create a DOM element for the marker
-//     const el = document.createElement('div');
-//     el.className = 'marker';
-//     el.style.backgroundColor = 'red';
-//     el.style.width = `1rem`;
-//     el.style.height = `1rem`;
-
-//     // el.addEventListener('click', () => {
-//     //   window.alert(marker.properties.message);
-//     // });
-
-//     // add marker to map
-//     new Marker({ element: el })
-//       .setLngLat(marker.geometry.coordinates)
-//       .addTo(map);
-//   });
-// }
-
-// export function addEarthquakeLayer(map, earthquake) {
-//   console.log('earthquake from addEarthquakeLayer', earthquake);
-
-//   // 1. Add the GeoJSON data as a source to the map
-//   if (!map.getSource('earthquakes')) {
-//     map.addSource('earthquakes', {
-//       type: 'geojson',
-//       data: earthquake // Pass your raw FeatureCollection directly!
-//     });
-//   } else {
-//     // If the function is called again with new data, update it efficiently
-//     map.getSource('earthquakes').setData(earthquake);
-//   }
-
-//   // 2. Add a circle layer to render all points via WebGL
-//   if (!map.getLayer('earthquake-points')) {
-//     map.addLayer({
-//       id: 'earthquake-points',
-//       type: 'circle',
-//       source: 'earthquakes',
-//       paint: {
-//         'circle-radius': 8, // Roughly 1rem (16px diameter)
-//         'circle-color': 'red',
-//         'circle-stroke-width': 1,
-//         'circle-stroke-color': '#ffffff'
-//       }
-//     });
-
-//     // 3. Handle click events on the layer (replaces individual element listeners)
-//     map.on('click', 'earthquake-points', (e) => {
-//       const feature = e.features[0];
-
-//       // Access your properties here (e.g., feature.properties.title or message)
-//       window.alert(`Earthquake magnitude: ${feature.properties.mag}`);
-//     });
-
-//     // Change the cursor to a pointer when hovering over points
-//     map.on('mouseenter', 'earthquake-points', () => {
-//       map.getCanvas().style.cursor = 'pointer';
-//     });
-//     map.on('mouseleave', 'earthquake-points', () => {
-//       map.getCanvas().style.cursor = '';
-//     });
-//   }
-// }
-
-// addmarkers.js
 export async function addEarthquakeLayer(map, earthquake) {
   // 1. Wait until the map style is fully loaded
   if (!map.isStyleLoaded()) {
@@ -131,6 +56,12 @@ export async function addEarthquakeLayer(map, earthquake) {
           7,
           "#991b1b",
         ],
+        // "circle-opacity": [
+        //   "case",
+        //   ["boolean", ["feature-state", "selected"], false],
+        //   1,
+        //   0.2,
+        // ],
         "circle-stroke-width": 1,
         "circle-stroke-color": "#ffffff",
       },

@@ -6,35 +6,6 @@ export function renderEarthquakeInputs() {
   // Clear existing content
   dynamicContainer.replaceChildren();
 
-  // 1. Radius Input Group
-  // const radiusGroup = document.createElement("div");
-  // radiusGroup.className = "input-group";
-
-  // const radiusLabel = document.createElement("label");
-  // radiusLabel.htmlFor = "limit";
-  // radiusLabel.textContent = "limit";
-
-  // const selectWrapper = document.createElement("div");
-  // selectWrapper.className = "select-wrapper";
-
-  // const radiusInput = document.createElement("input");
-  // radiusInput.type = "number";
-  // radiusInput.id = "limit";
-  // radiusInput.name = "limit";
-  // radiusInput.placeholder = "limit the number of earthquake default 100";
-  // // radiusInput.value = 10;
-
-  // const unitSelect = document.createElement("select");
-  // unitSelect.id = "radius-unit";
-  // unitSelect.name = "radius-unit";
-
-  // const optionKm = new Option("KM", "km", true, true);
-  // const optionDeg = new Option("DEG", "deg");
-  // unitSelect.append(optionKm, optionDeg);
-
-  // selectWrapper.append(radiusInput, unitSelect);
-  // radiusGroup.append(radiusLabel, selectWrapper);
-
   // 2. Magnitude Input Group
   const magGroup = document.createElement("div");
   magGroup.className = "input-group";
@@ -98,18 +69,6 @@ export function renderCardDetails(target, titleText, kvPairs = []) {
     container.appendChild(header);
   }
 
-  // if (renderInput) {
-  //   const container = document.getElementById(inputContainer);
-  //   const input = document.createElement("input");
-  //   input.type = "checkbox";
-  //   input.id = "card-toggle-1";
-  //   input.className = "toggle-checkbox";
-  //   container.appendChild(input);
-  //   const label = createAccordionLabel();
-  //   container.appendChild(label);
-  // }
-
-  // 4. Create the Description List Container (<dl>)
   const dl = document.createElement("dl");
   dl.className = "kv-list";
 

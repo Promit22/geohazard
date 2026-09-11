@@ -1,4 +1,4 @@
-import { Map, setWorkerUrl, Marker, GeolocateControl } from "maplibre-gl";
+import { Map, setWorkerUrl, Marker, Popup } from "maplibre-gl";
 import workerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url";
 import {
   renderEarthquakeInputs,
@@ -9,7 +9,7 @@ import {
 } from "./helpers/analysisHelper.js";
 import { countryCodesAndBboxes } from "./helpers/isoCode.js";
 import { showError, clearError } from "./helpers/errorHandler.js";
-import { buildParamsObject, buildUSGSUrl } from "./helpers/urlBuilder.js";
+
 import { getEarthquakes } from "./helpers/hazard.js";
 import { addEarthquakeLayer } from "./helpers/addmarkers.js";
 import { findEarthquake } from "./helpers/hazard.js";
@@ -21,7 +21,7 @@ setWorkerUrl(workerUrl);
 
 const map = new Map({
   container: "map", // container id
-  style: "https://tiles.openfreemap.org/styles/bright", // style URL
+  style: "https://tiles.openfreemap.org/styles/liberty", // style URL
   center: [90.3563, 23.685], // starting position [lng, lat]
   zoom: 6, // starting zoom
   maplibreLogo: true,
@@ -57,26 +57,11 @@ function setupCountryAutocomplete() {
   const countryInput = document.getElementById("country");
   if (!countryInput) return;
 
-  // 1. Convert ISO codes to full localized names and sort alphabetically
-  // const regionNames = new Intl.DisplayNames(["en"], { type: "region" });
-  // const countries = countryCodesAndBboxes
-  //   .map((country) => {
-  //     try {
-  //       return regionNames.of(country.code);
-  //     } catch {
-  //       return null;
-  //     }
-  //   })
-  //   .filter(Boolean)
-  //   .sort((a, b) => a.localeCompare(b));
-
-  // 2. Check or create the <datalist> element
   let datalist = document.getElementById("country-list");
   if (!datalist) {
     datalist = document.createElement("datalist");
     datalist.id = "country-list";
 
-    // 3. Use DocumentFragment to batch DOM insertions safely without innerHTML
     const fragment = document.createDocumentFragment();
 
     for (let i = 0; i < countryCodesAndBboxes.length; i++) {
@@ -89,7 +74,6 @@ function setupCountryAutocomplete() {
     document.body.appendChild(datalist);
   }
 
-  // 4. Link datalist to <input id="country">
   countryInput.setAttribute("list", "country-list");
 }
 
@@ -106,16 +90,6 @@ form.addEventListener("input", (e) => {
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-  // const formData = new FormData(form);
-  // const hazard = formData.get("hazard");
-  // const country = formData.get("country");
-  // const startTime = formData.get("start-time");
-  // const endTime = formData.get("end-time");
-  // // const radius = formData.get("radius");
-  // // const radiusInput = formData.get("radius-unit");
-  // const magnitude = formData.get("magnitude");
-  // // console.log(formData, hazard);
-
   let isValid = true;
   let firstInvalidInput = null;
 
@@ -133,13 +107,6 @@ form.addEventListener("submit", (e) => {
     isValid = false;
     if (!firstInvalidInput) firstInvalidInput = country;
   }
-
-  //make it report invalid country name
-  // if (country.value.trim()) {
-  //   showError(country, "Please enter a country name.");
-  //   isValid = false;
-  //   if (!firstInvalidInput) firstInvalidInput = country;
-  // }
 
   if (!startTime.value) {
     showError(startTime, "Please select a start date.");
@@ -165,6 +132,10 @@ form.addEventListener("submit", (e) => {
     firstInvalidInput.focus();
     return;
   }
+
+  console.log("start time", startTime.value);
+  console.log("start time", endTime.value);
+
   const currentCountry = countryCodesAndBboxes.find((c) => {
     return (
       country.value.trim().toString().toLowerCase() === c.name.toLowerCase()
@@ -183,18 +154,6 @@ form.addEventListener("submit", (e) => {
     duration: 4000,
     padding: 50,
   });
-
-  // earthquake = ;
-  // console.log(earthquake);
-
-  // const paramsObj = buildParamsObject(
-  //   startTime.value,
-  //   endTime.value,
-  //   countryBbox.bbox,
-  // );
-  // console.log(paramsObj);
-
-  // const url = buildUSGSUrl(paramsObj);
 });
 
 async function setEarthquakeOnMap(starttime, endtime, bbox, magnitude, limit) {
@@ -203,7 +162,8 @@ async function setEarthquakeOnMap(starttime, endtime, bbox, magnitude, limit) {
 
   await addEarthquakeLayer(map, earthquake);
 }
-// addEarthquakeLayer(map, earthquake);
+
+const loading = document.getElementById("loading");
 
 map.on("click", "earthquake-points", async (e) => {
   const featureId = e.features[0]["properties"]["ids"]
@@ -214,46 +174,74 @@ map.on("click", "earthquake-points", async (e) => {
   const usgsEar = findEarthquake(featureId, earthquake);
 
   const currentEarthquake = usgsEar ? usgsEar : e.features[0];
-  // console.log("current earthquake", feature);
-
-  // console.log("current earthquake", feature);
-  // console.log("feature id:", feature.id);
-  // console.log("properties:", feature.properties);
-  // console.log("geometry:", feature.geometry);
-  // window.alert(`Earthquake magnitude: ${feature.properties.mag}`);
-
-  // const features = map.queryRenderedFeatures(e.point, {
-  //   layers: ["earthquake-points"],
-  // });
-
-  // if (!features.length) return;
-
-  // const feature = features[0];
 
   console.log("Current earthquake:", currentEarthquake);
   const [lng, lat, dep] = currentEarthquake.geometry.coordinates;
+
+  map.flyTo({
+    center: [lng, lat],
+    zoom: 10,
+    duration: 1000,
+  });
   console.log(e.features[0]);
+
+  const radius = 10;
+
+  const circle = turf.circle([lng, lat], radius, {
+    steps: 64,
+    units: "kilometers",
+  });
+
+  const source = map.getSource("location-radius");
+
+  if (source) {
+    source.setData(circle);
+  } else {
+    map.addSource("location-radius", {
+      type: "geojson",
+      data: circle,
+    });
+
+    map.addLayer({
+      id: "location-radius",
+      type: "fill",
+      source: "location-radius",
+      paint: {
+        "fill-color": "#8CCFFF",
+        "fill-opacity": 0.5,
+      },
+    });
+
+    map.addLayer({
+      id: "location-radius-outline",
+      type: "line",
+      source: "location-radius",
+      paint: {
+        "line-color": "#0094ff",
+        "line-width": 3,
+      },
+    });
+  }
 
   console.log("Coordinates:", lat, lng, dep);
   const earthquakeKv = generateEarthquakeKv(currentEarthquake, dep);
   renderCardDetails("details", "Earthquake Details", earthquakeKv);
 
+  loading.style.display = "block";
+
   try {
-    const places = await getOverturePlaces();
-    // lat,
-    // lng,
-    // 10000, // 10 km
-    // "ovt_OvhhpmB2VF6uDu9CCGsGoXGu5xspMbXwfj38NqgzKvnz0C1h28RKxUj4myRlxb5J",
+    const places = await getOverturePlaces(
+      lat,
+      lng,
+      10000,
+      "ovt_OvhhpmB2VF6uDu9CCGsGoXGu5xspMbXwfj38NqgzKvnz0C1h28RKxUj4myRlxb5J",
+    );
+
+    loading.style.display = "none";
+
     const totalPlaces = places.features.length;
     const placesCategory = generatePlacesCategory(places);
-    // renderCardDetails("category", "Potentially exposed", [
-    //   {
-    //     key: "Places",
-    //     value: `${totalPlaces}${totalPlaces === 25000 ? "+" : ""}`,
-    //   },
-    // ]);
 
-    // renderCardDetails("more", null, placesCategory, true, "category");
     renderCollapsibleCard(
       "category",
       "Potentially Exposed",
@@ -276,6 +264,25 @@ map.on("click", "earthquake-points", async (e) => {
       })
       .sort((a, b) => a.distance - b.distance)
       .slice(0, 10);
+    console.log("nearest places", nearestPlaces);
+
+    nearestPlaces.forEach((place) => {
+      const popup = new Popup({
+        offset: 25,
+      }).setHTML(`
+        <strong>${place.feature.properties.names.primary}</strong>
+        <br>
+        ${place.distance.toFixed(2)} km from earthquake
+    `);
+
+      const marker = new Marker()
+        .setLngLat(place.feature.geometry.coordinates)
+        .setPopup(popup)
+        .addTo(map);
+
+      marker.getElement().style.cursor = "pointer";
+    });
+
     console.log("places category", placesCategory);
 
     console.log("Overture response:", places);
