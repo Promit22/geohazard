@@ -22,22 +22,3 @@ const map = new Map({
   );
   await addEarthquakeLayer(map, earthquake);
 })();
-
-// console.log('earthquake from main.js', earthquake);
-
-async function test() {
-  const raw = await fetch(
-    "https://api.overturemapsapi.com/places/countries?limit=350",
-    {
-      headers: {
-        "x-api-key": "DEMO-API-KEY",
-      },
-    },
-  );
-  const json = await raw.json();
-  console.log("buildins from test", json);
-}
-
-// test();
-
-// curl -H "x-api-key: " -X GET -G ''

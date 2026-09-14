@@ -37,41 +37,6 @@
       </section>
 
       <section id="config">
-        <!-- <form id="config-form" action="">
-          
-          <div id="static">
-            <h2>Configure</h2>
-            <div class="input-group">
-              <label for="hazard-type">Hazard type</label>
-              <div class="select-wrapper">
-                <select id="hazard-type" name="hazard">
-                  <option value="earthquake" selected>Earthquake</option>
-                  <option value="flood">Flood</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="input-group">
-              <label for="country">Country</label>
-              <input type="text" id="country" name="country" placeholder="e.g. Japan" />
-            </div>
-
-            <div class="input-group">
-              <label for="start-time">Start time</label>
-              <input type="date" id="start-time" name="start-time" />
-            </div>
-
-            <div class="input-group">
-              <label for="end-time">End time</label>
-              <input type="date" id="end-time" name="end-time" />
-            </div>
-          </div>
-
-          <div id="dynamic">
-          
-          </div>
-          <button type="submit">Analyze</button>
-        </form> -->
         <form id="config-form" action="" novalidate>
           <div id="static">
             <h2>Configure</h2>
@@ -122,80 +87,17 @@
         </p>
       </section>
 
-      <!-- dynamic -->
       <section class="parent-container">
         <!-- Child Container 1 -->
         <div class="child-card" id="details">
           <h2 class="card-header">Earthquake Details</h2>
           <p>Select earthquake to view</p>
-
-          <!-- <dl class="kv-list">
-            <div class="kv-pair">
-              <dt class="kv-key">Full Name</dt>
-              <dd class="kv-value">Jane Doe</dd>
-            </div>
-            <div class="kv-pair">
-              <dt class="kv-key">Email Address</dt>
-              <dd class="kv-value">jane.doe@example.com</dd>
-            </div>
-            <div class="kv-pair">
-              <dt class="kv-key">Role</dt>
-              <dd class="kv-value">Senior Developer</dd>
-            </div>
-            <div class="kv-pair">
-              <dt class="kv-key">Status</dt>
-              <dd class="kv-value status-active">Active</dd>
-            </div>
-          </dl> -->
         </div>
 
         <!-- Child Container 2 -->
         <div class="child-card" id="category">
           <h2 class="card-header">Potentially Exposed</h2>
-          <p>Select earthquake to view</p>
-          <img src="/src/assets/loading.gif" id="loading" alt="" />
-
-          <!-- Always visible items -->
-          <!-- <dl class="kv-list">
-            <div class="kv-pair">
-              <dt class="kv-key">Login</dt>
-              <dd class="kv-value">10:00 AM</dd>
-            </div>
-            <div class="kv-pair">
-              <dt class="kv-key">Password Change</dt>
-              <dd class="kv-value">Yesterday</dd>
-            </div>
-          </dl> -->
-
-          <!-- Hidden Checkbox Toggle -->
-          <!-- <input type="checkbox" id="card-toggle-1" class="toggle-checkbox" /> -->
-
-          <!-- Animated Content Wrapper -->
-          <!-- <div class="accordion-wrapper">
-            <div class="accordion-inner" id="more">
-              <dl class="kv-list extra-padding">
-                <div class="kv-pair">
-                  <dt class="kv-key">IP Address</dt>
-                  <dd class="kv-value">192.168.1.1</dd>
-                </div>
-                <div class="kv-pair">
-                  <dt class="kv-key">Device</dt>
-                  <dd class="kv-value">MacBook Pro</dd>
-                </div>
-                <div class="kv-pair">
-                  <dt class="kv-key">Location</dt>
-                  <dd class="kv-value">New York, US</dd>
-                </div>
-              </dl>
-            </div>
-          </div> -->
-
-          <!-- Label Button -->
-          <!-- <label for="card-toggle-1" class="accordion-btn">
-            <span class="txt-more">Show More Details</span>
-            <span class="txt-less">Show Less</span>
-            <span class="chevron">›</span>
-          </label> -->
+          <p id="info">Select earthquake to view</p>
         </div>
       </section>
     </main>
@@ -207,19 +109,3 @@
     <script src="./src/analysis.js" type="module"></script>
   </body>
 </html>
-
-<!-- <div class="input-group">
-              <label for="radius">Radius</label>
-              <div class="select-wrapper">
-                <input type="text" id="radius" placeholder="5" />
-                <select id="radius-unit">
-                  <option value="km" selected>KM</option>
-                  <option value="deg">DEG</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="input-group">
-              <label for="magnitude">Magnitude</label>
-              <input type="text" id="magnitude" placeholder="5" />
-            </div> -->

@@ -1,13 +1,13 @@
 export async function addEarthquakeLayer(map, earthquake) {
   // 1. Wait until the map style is fully loaded
-  if (!map.isStyleLoaded()) {
-    await new Promise((resolve) => {
-      map.once("style.load", resolve);
-      console.log("marker success");
-    });
-  } else {
-    console.log("marker failed");
-  }
+  // if (!map.isStyleLoaded()) {
+  //   await new Promise((resolve) => {
+  //     map.once("style.load", resolve);
+  //     console.log("marker success");
+  //   });
+  // } else {
+  //   console.log("marker failed");
+  // }
 
   console.log("earthquake from addEarthquakeLayer", earthquake);
 
@@ -56,74 +56,10 @@ export async function addEarthquakeLayer(map, earthquake) {
           7,
           "#991b1b",
         ],
-        // "circle-opacity": [
-        //   "case",
-        //   ["boolean", ["feature-state", "selected"], false],
-        //   1,
-        //   0.2,
-        // ],
         "circle-stroke-width": 1,
         "circle-stroke-color": "#ffffff",
       },
     });
-
-    // map.on("click", "earthquake-points", async (e) => {
-    //   const featureId = e.features[0]["properties"]["ids"]
-    //     .split(",")
-    //     .filter(Boolean);
-
-    //   console.log(featureId);
-
-    //   const currentEarthquake = findEarthquake(featureId, earthquake);
-    //   // console.log("current earthquake", feature);
-
-    //   // console.log("current earthquake", feature);
-    //   // console.log("feature id:", feature.id);
-    //   // console.log("properties:", feature.properties);
-    //   // console.log("geometry:", feature.geometry);
-    //   // window.alert(`Earthquake magnitude: ${feature.properties.mag}`);
-
-    //   // const features = map.queryRenderedFeatures(e.point, {
-    //   //   layers: ["earthquake-points"],
-    //   // });
-
-    //   // if (!features.length) return;
-
-    //   // const feature = features[0];
-
-    //   console.log("Current earthquake:", currentEarthquake);
-    //   const [lng, lat, dep] = currentEarthquake.geometry.coordinates;
-    //   console.log(e.features[0]);
-
-    //   console.log("Coordinates:", lat, lng, dep);
-
-    //   try {
-    //     const places = await getOverturePlaces();
-    //     // lat,
-    //     // lng,
-    //     // 10000, // 10 km
-    //     // "ovt_OvhhpmB2VF6uDu9CCGsGoXGu5xspMbXwfj38NqgzKvnz0C1h28RKxUj4myRlxb5J",
-    //     console.log(places.features.length);
-    //     const placesCategory = generatePlacesCategory(places);
-    //     const nearestPlaces = places.features
-    //       .map((place) => {
-    //         const [placeLng, placeLat] = place.geometry.coordinates;
-
-    //         return {
-    //           feature: place,
-    //           distance: distanceKm(lat, lng, placeLat, placeLng),
-    //         };
-    //       })
-    //       .sort((a, b) => a.distance - b.distance)
-    //       .slice(0, 10);
-    //     console.log("places category", placesCategory);
-
-    //     console.log("Overture response:", places);
-    //     console.log("Number returned:", places.features.length);
-    //   } catch (error) {
-    //     console.error("Failed to get Overture places:", error);
-    //   }
-    // });
 
     map.on("mouseenter", "earthquake-points", () => {
       map.getCanvas().style.cursor = "pointer";

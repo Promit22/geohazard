@@ -53,8 +53,3 @@ export function buildParamsObject(
     limit,
   };
 }
-
-/*
-ok so far we have sort of dynamic url making and making request with it. next step should be
-completing it and displaying the data in map. Good luck
-*/

@@ -101,9 +101,20 @@ form.addEventListener("submit", (e) => {
 
   [(country, startTime, endTime)].forEach(clearError);
 
+  const isValidCountry = countryCodesAndBboxes.find((c) => {
+    return (
+      c.name.toLowerCase() === country.value.trim().toString().toLowerCase()
+    );
+  });
+
   // 1. Validate Required Fields
   if (!country.value.trim()) {
     showError(country, "Please enter a country name.");
+    isValid = false;
+    if (!firstInvalidInput) firstInvalidInput = country;
+  }
+  if (!isValidCountry) {
+    showError(country, "Please enter a valid country name.");
     isValid = false;
     if (!firstInvalidInput) firstInvalidInput = country;
   }
@@ -226,8 +237,15 @@ map.on("click", "earthquake-points", async (e) => {
   console.log("Coordinates:", lat, lng, dep);
   const earthquakeKv = generateEarthquakeKv(currentEarthquake, dep);
   renderCardDetails("details", "Earthquake Details", earthquakeKv);
+  const categoryContainer = document.getElementById("category");
+  const info = document.getElementById("info");
+  if (info) info.style.display = "none";
+  const imgElm = document.createElement("img");
+  imgElm.src = "./src/assets/loading.gif";
+  imgElm.id = "loading";
+  categoryContainer.appendChild(imgElm);
 
-  loading.style.display = "block";
+  imgElm.style.display = "block";
 
   try {
     const places = await getOverturePlaces(
@@ -237,7 +255,7 @@ map.on("click", "earthquake-points", async (e) => {
       "ovt_OvhhpmB2VF6uDu9CCGsGoXGu5xspMbXwfj38NqgzKvnz0C1h28RKxUj4myRlxb5J",
     );
 
-    loading.style.display = "none";
+    imgElm.style.display = "none";
 
     const totalPlaces = places.features.length;
     const placesCategory = generatePlacesCategory(places);

@@ -127,9 +127,6 @@ export function renderCollapsibleCard(
     return;
   }
 
-  // --- THE CATCH: Generate a unique ID for the Checkbox & Label link ---
-  // const uniqueToggleId = `toggle-${container.id || Math.random().toString(36).substring(2, 9)}`;
-
   // 5. Create Checkbox Input
   const checkbox = document.createElement("input");
   checkbox.type = "checkbox";
@@ -253,6 +250,3 @@ function createAccordionLabel(toggleId = "1") {
 
   return label;
 }
-
-// Example usage:
-// document.body.appendChild(createAccordionLabel(1));
