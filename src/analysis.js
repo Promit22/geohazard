@@ -241,7 +241,7 @@ map.on("click", "earthquake-points", async (e) => {
   const info = document.getElementById("info");
   if (info) info.style.display = "none";
   const imgElm = document.createElement("img");
-  imgElm.src = "./src/assets/loading.gif";
+  imgElm.src = "./assets/loading.gif";
   imgElm.id = "loading";
   categoryContainer.appendChild(imgElm);
 
