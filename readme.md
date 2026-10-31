@@ -2,7 +2,7 @@
 
 ## Description
 
-A page to explore geographical hazards through country search and detailed view of the event.
+A page to explore geographical hazards through country search and detailed view of the event. [Visit the live page](https://promit22.github.io/geohazard/) to see.
 
 ### Core features
 
